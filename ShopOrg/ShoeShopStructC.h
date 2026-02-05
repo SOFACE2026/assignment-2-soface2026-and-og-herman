@@ -1,9 +1,12 @@
 #include <stdbool.h>
 
+// funktionssignaturer
 void add_items(struct ShoeShop, int, int);
 int in_stock(struct ShowShop, int);
 int count_items(struct ShoeShop);
 bool clear(struct ShoeShop, int);
+struct ShoeShop ShoeShopConstructor(int size);
+void ShoeShopDestructor(struct ShoeShop * s);
 
 struct ShoeShop{
     int * shelf;

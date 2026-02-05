@@ -1,16 +1,19 @@
 #include <stdbool.h>
 
-void add_items(struct ShoeShop, int, int);
-int in_stock(struct ShowShop, int);
-int count_items(struct ShoeShop);
-bool clear(struct ShoeShop, int);
+// funktionssignaturer
+void add_items(struct ShoeShop *, int, int);
+int in_stock(struct ShowShop *, int);
+int count_items(struct ShoeShop *);
+bool clear(struct ShoeShop *, int);
+struct ShoeShop ShoeShopConstructor(int size);
+void ShoeShopDestructor(struct ShoeShop * s);
 
-struct Shop {
-
-    void (* add_items_func)(struct ShoeShop, int, int);
-    int (* in_stock_func)(struct ShoeShop, int);
-    int (* count_items_func)(struct ShoeShop);
-    bool (* clear_func)(struct ShoeShop, int);
+struct Shop { // virtuel klasse, så ingen konstrutor og destruktor til den
+    // functions for operating a ShoeShop
+    void (* add_items_func)(struct ShoeShop *, int, int);
+    int (* in_stock_func)(struct ShoeShop *, int);
+    int (* count_items_func)(struct ShoeShop *);
+    bool (* clear_func)(struct ShoeShop *, int);
 };
 
 
@@ -21,13 +24,15 @@ struct Shop {
 // alternative havde været at ændre funktionerne til at tage en instans af shop ind. Dette ville dog resultere i at vi i fx add_items_func skulle prøve
 // at tilgå s->shelf[row], hvilket giver en fejl, da s ikke har en shelf attribut når den optræder som en shop instans.
 
-struct ShoeShop {
-    int * shelf;
-    int size;
 
-    void (* add_items_func)(struct ShoeShop, int, int);
-    int (* in_stock_func)(struct ShoeShop, int);
-    int (* count_items_func)(struct ShoeShop);
-    bool (* clear_func)(struct ShoeShop, int);
+struct ShoeShop {
+    int * shelf;// array storing number of items
+    int size; // number of slots in the shelf
+
+    // identiske med shop
+    void (* add_items_func)(struct ShoeShop *, int, int); // adds a quantity of an item
+    int (* in_stock_func)(struct ShoeShop *, int);// checks stock on an item
+    int (* count_items_func)(struct ShoeShop *);// counts total items
+    bool (* clear_func)(struct ShoeShop *, int);// removes an item
 };
 
