@@ -1,18 +1,16 @@
 #include <stdbool.h>
 
-void add_items(struct ShoeShop *, int, int);
-int in_stock(struct ShowShop *, int);
-int count_items(struct ShoeShop *);
-bool clear(struct ShoeShop *, int);
-struct ShoeShop ShoeShopConstructor(int size);
-void ShoeShopDestructor(struct ShoeShop * s);
+void add_items(struct ShoeShop, int, int);
+int in_stock(struct ShowShop, int);
+int count_items(struct ShoeShop);
+bool clear(struct ShoeShop, int);
 
-struct Shop { // virtuel klasse, så ingen konstrutor og destruktor til den
+struct Shop {
 
-    void (* add_items_func)(struct ShoeShop *, int, int);
-    int (* in_stock_func)(struct ShoeShop *, int);
-    int (* count_items_func)(struct ShoeShop *);
-    bool (* clear_func)(struct ShoeShop  *, int);
+    void (* add_items_func)(struct ShoeShop, int, int);
+    int (* in_stock_func)(struct ShoeShop, int);
+    int (* count_items_func)(struct ShoeShop);
+    bool (* clear_func)(struct ShoeShop, int);
 };
 
 
@@ -23,13 +21,13 @@ struct Shop { // virtuel klasse, så ingen konstrutor og destruktor til den
 // alternative havde været at ændre funktionerne til at tage en instans af shop ind. Dette ville dog resultere i at vi i fx add_items_func skulle prøve
 // at tilgå s->shelf[row], hvilket giver en fejl, da s ikke har en shelf attribut når den optræder som en shop instans.
 
-struct ShoeShop { 
+struct ShoeShop {
     int * shelf;
     int size;
-    // identiske med shop
-    void (* add_items_func)(struct ShoeShop  *, int, int);
-    int (* in_stock_func)(struct ShoeShop *, int);
-    int (* count_items_func)(struct ShoeShop *);
-    bool (* clear_func)(struct ShoeShop *, int);
+
+    void (* add_items_func)(struct ShoeShop, int, int);
+    int (* in_stock_func)(struct ShoeShop, int);
+    int (* count_items_func)(struct ShoeShop);
+    bool (* clear_func)(struct ShoeShop, int);
 };
 
